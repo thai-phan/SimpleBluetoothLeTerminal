@@ -2,9 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/ble_disconnect"
+        android:title="DIS"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/ble_scan"
         android:title="SCAN"
         app:showAsAction="always" />
+
     <item
         android:id="@+id/ble_scan_stop"
         android:title="STOP"

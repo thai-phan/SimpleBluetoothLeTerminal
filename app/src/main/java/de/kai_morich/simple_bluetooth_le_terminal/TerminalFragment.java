@@ -15,6 +15,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.method.ScrollingMovementMethod;
 import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -78,6 +79,7 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     @Override
     public void onStop() {
         if(service != null && !getActivity().isChangingConfigurations())
+            Log.d("Timber", "onStop");
             service.detach();
         super.onStop();
     }
@@ -137,6 +139,9 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
 
         View sendBtn = view.findViewById(R.id.send_btn);
         sendBtn.setOnClickListener(v -> send(sendText.getText().toString()));
+
+        View disBtn = view.findViewById(R.id.dis_btn);
+        disBtn.setOnClickListener(v -> disconnect());
         return view;
     }
 

@@ -113,11 +113,13 @@ public class DevicesFragment extends ListFragment {
                     view = getActivity().getLayoutInflater().inflate(R.layout.device_list_item, parent, false);
                 TextView text1 = view.findViewById(R.id.text1);
                 TextView text2 = view.findViewById(R.id.text2);
+                TextView text3 = view.findViewById(R.id.text3);
                 String deviceName = device.getName();
                 if(deviceName == null || deviceName.isEmpty())
                     deviceName = "<unnamed>";
                 text1.setText(deviceName);
                 text2.setText(device.getDevice().getAddress());
+                text3.setText("my text");
                 return view;
             }
         };
