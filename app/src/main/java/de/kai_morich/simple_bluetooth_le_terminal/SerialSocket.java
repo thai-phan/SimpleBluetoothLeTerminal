@@ -155,13 +155,8 @@ class SerialSocket extends BluetoothGattCallback {
         context.registerReceiver(disconnectBroadcastReceiver, new IntentFilter(Constants.INTENT_ACTION_DISCONNECT));
         Log.d(TAG, "connect "+device);
         context.registerReceiver(pairingBroadcastReceiver, pairingIntentFilter);
-        if (Build.VERSION.SDK_INT < 23) {
-            Log.d(TAG, "connectGatt");
-            gatt = device.connectGatt(context, false, this);
-        } else {
-            Log.d(TAG, "connectGatt,LE");
-            gatt = device.connectGatt(context, false, this, BluetoothDevice.TRANSPORT_LE);
-        }
+        Log.d(TAG, "connectGatt,LE");
+        gatt = device.connectGatt(context, false, this, BluetoothDevice.TRANSPORT_LE);
         if (gatt == null)
             throw new IOException("connectGatt failed");
         // continues asynchronously in onPairingBroadcastReceive() and onConnectionStateChange()
@@ -251,14 +246,10 @@ class SerialSocket extends BluetoothGattCallback {
     }
 
     private void connectCharacteristics2(BluetoothGatt gatt) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Log.d(TAG, "request max MTU");
-            if (!gatt.requestMtu(MAX_MTU))
-                onSerialConnectError(new IOException("request MTU failed"));
-            // continues asynchronously in onMtuChanged
-        } else {
-            connectCharacteristics3(gatt);
-        }
+        Log.d(TAG, "request max MTU");
+        if (!gatt.requestMtu(MAX_MTU))
+            onSerialConnectError(new IOException("request MTU failed"));
+        // continues asynchronously in onMtuChanged
     }
 
     @Override

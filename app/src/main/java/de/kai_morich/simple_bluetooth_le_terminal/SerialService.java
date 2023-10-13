@@ -171,20 +171,20 @@ public class SerialService extends Service implements SerialListener {
     }
 
     private void createNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel nc = new NotificationChannel(Constants.NOTIFICATION_CHANNEL, "Background service", NotificationManager.IMPORTANCE_LOW);
-            nc.setShowBadge(false);
-            NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            nm.createNotificationChannel(nc);
-        }
+        NotificationChannel nc = new NotificationChannel(Constants.NOTIFICATION_CHANNEL, "Background service", NotificationManager.IMPORTANCE_LOW);
+        nc.setShowBadge(false);
+        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.createNotificationChannel(nc);
         Intent disconnectIntent = new Intent().setAction(Constants.INTENT_ACTION_DISCONNECT);
         Intent restartIntent = new Intent()
                 .setClassName(this, Constants.INTENT_CLASS_MAIN_ACTIVITY)
                 .setAction(Intent.ACTION_MAIN)
                 .addCategory(Intent.CATEGORY_LAUNCHER);
-        int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ? PendingIntent.FLAG_IMMUTABLE : 0;
+        int flags = PendingIntent.FLAG_IMMUTABLE;
+
         PendingIntent disconnectPendingIntent = PendingIntent.getBroadcast(this, 1, disconnectIntent, flags);
         PendingIntent restartPendingIntent = PendingIntent.getActivity(this, 1, restartIntent, flags);
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, Constants.NOTIFICATION_CHANNEL)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setColor(getResources().getColor(R.color.colorPrimary))
