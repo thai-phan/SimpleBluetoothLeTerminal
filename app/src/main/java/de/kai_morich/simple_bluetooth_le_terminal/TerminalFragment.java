@@ -56,9 +56,11 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setHasOptionsMenu(true);
-    setRetainInstance(true);
+//    setRetainInstance(true);
     assert getArguments() != null;
     deviceAddress = getArguments().getString("device");
+    requireActivity().bindService(new Intent(getActivity(), SerialService.class), this, Context.BIND_AUTO_CREATE);
+
   }
 
   @Override
@@ -85,14 +87,6 @@ public class TerminalFragment extends Fragment implements ServiceConnection, Ser
     assert service != null;
     service.detach();
     super.onStop();
-  }
-
-  @SuppressWarnings("deprecation")
-  // onAttach(context) was added with API 23. onAttach(activity) works for all API versions
-  @Override
-  public void onAttach(@NonNull Activity activity) {
-    super.onAttach(activity);
-    requireActivity().bindService(new Intent(getActivity(), SerialService.class), this, Context.BIND_AUTO_CREATE);
   }
 
   @Override
